@@ -1,0 +1,43 @@
+FROM php:apache
+
+RUN apt update \
+    && apt install -y apache2 net-tools \
+    && apt clean \
+    && rm -rf /var/www/html/*
+
+# Expose port 80
+EXPOSE 80
+
+# Define the PHP code as a heredoc and set it to the $phpCode variable
+ENV phpCode=$(cat << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attractive PHP Page</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1> "Monk Who Travel" </h1>
+    </header>
+
+    <div class="container">
+        <h2> Docker Container IP </h2>
+        <div class="output">
+            <?php
+                // Your PHP code here
+            ?>
+        </div>
+    </div>
+</body>
+</html>
+EOF
+)
+
+# Create index.php with the PHP code content
+RUN echo "$phpCode" > /var/www/html/index.php
+
+# Start Apache in foreground when the container launches
+CMD ["apache2-foreground"]
