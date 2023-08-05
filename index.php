@@ -61,7 +61,7 @@
     </header>
 
     <div class="container">
-        <h2> Docker Container IP </h2>
+        <h2> Docker Container IP 1 </h2>
         <div class="output">
             <?php
                 // Get server information using PHP function
